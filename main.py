@@ -123,15 +123,15 @@ def ecg_denoising_pipeline(ecg_signal, fs=360):
     return reconstructed_signal
 
 
-# -------------------------------
-# Example Usage
-# -------------------------------
+
 if __name__ == "__main__":
 
     print("Generating signal...")
 
     t = np.linspace(0, 1, 360)
-    ecg = np.sin(2 * np.pi * 5 * t) + 0.5 * np.random.randn(len(t))
+    clean = np.sin(2 * np.pi * 5 * t)
+    noise = 0.5 * np.random.randn(len(t))
+    ecg = noise + clean
 
     print("Running pipeline...")
     denoised = ecg_denoising_pipeline(ecg)
@@ -150,5 +150,5 @@ if __name__ == "__main__":
     plt.tight_layout()
     plt.show()
 
-    mse_value = compute_mse(ecg, denoised)
+    mse_value = compute_mse(clean, denoised)
     print("MSE:", mse_value)
