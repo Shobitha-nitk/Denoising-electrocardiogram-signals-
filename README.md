@@ -75,14 +75,6 @@ The output includes:
 * Visual comparison of noisy and denoised ECG signals
 * Quantitative evaluation using MSE
 
-# Future Work
- 
-* Implement true S-transform
-* Use advanced EMD variants (EEMD, CEEMDAN)
-* Optimize for real-time processing
-* Evaluate using real ECG datasets (e.g., PhysioNet)
-* Explore hardware acceleration (FPGA/ASIC)
-
 # Applications
 
 * Biomedical signal processing
