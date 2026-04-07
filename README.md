@@ -63,6 +63,9 @@ ecg-denoising/
 
 # Results
 
+![Output](https://github.com/user-attachments/assets/fa464a65-c171-47a5-b7c1-5d9ad77f7d16)
+
+
 The output includes:
 
 * Generates a noisy ECG signal (for demonstration)
