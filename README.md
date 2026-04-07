@@ -1,95 +1,84 @@
-# ECG Denoising using STFT, EMD, and Non-Local Means Filtering
+#  ECG Denoising using STFT + Non-Local Means
 
-# Overview
+##  Overview
+This project implements an ECG signal denoising pipeline using:
+- Preprocessing (median filtering + detrending)
+- Time-frequency transformation via STFT
+- Non-Local Means (NLM) denoising on the spectrogram
+- Signal reconstruction using inverse STFT
 
-This project presents a hybrid signal processing pipeline for denoising Electrocardiogram (ECG) signals. The approach combines time-frequency analysis, signal decomposition, and advanced filtering techniques to effectively suppress noise while preserving important morphological features of the ECG waveform.
+The pipeline is evaluated using standard signal quality metrics.
 
-The implemented method integrates:
+##  Features
+- Loads real ECG data (MIT-BIH dataset via wfdb)
+- Falls back to synthetic ECG if dataset unavailable
+- Applies noise artificially for testing
+- Denoises in time-frequency domain
+- Computes multiple performance metrics
+- Visualizes signals and spectrograms
 
-* Short-Time Fourier Transform (STFT) as an approximation to the S-transform
-* Empirical Mode Decomposition (EMD)
-* Non-Local Means (NLM) filtering
-
-
-# Objectives
-
-* Remove noise from ECG signals while preserving signal characteristics
-* Explore hybrid denoising using time-frequency and decomposition methods
-* Evaluate performance using quantitative metrics such as Mean Squared Error (MSE)
-
-
-# Methodology
-
-The proposed pipeline consists of the following stages:
-
-1. Preprocessing
-
-   * Median filtering is applied to reduce impulsive noise.
-
-2. Time-Frequency Transformation
-
-   * The ECG signal is transformed using STFT to obtain a time-frequency representation.
-
-3. Magnitude-Phase Separation
-
-   * The complex STFT output is separated into magnitude and phase components.
-
-4. Signal Decomposition (EMD)
-
-   * The magnitude is decomposed into Intrinsic Mode Functions (IMFs) using a simplified EMD approach.
-
-5. Denoising (NLM Filtering)
-
-   * Each IMF is denoised using Non-Local Means filtering.
-
-6. Reconstruction
-
-   * Filtered IMFs are recombined.
-   * The denoised magnitude is combined with the original phase.
-
-7. Inverse Transformation
-
-   * The denoised signal is reconstructed using inverse STFT.
-
-
-# Project Structure
-
+##  Project Structure
 ```
-ecg-denoising/
-│
-├── ecg_denoising_pipeline.py   # Main implementation
-├── README.md                   # Project documentation
+ecg_denoising.py   # Main script (pipeline + plots + metrics)
+README.md          # Project documentation
+Output files 
 ```
 
-# Results
+##  Methodology
 
-![Output](https://github.com/user-attachments/assets/fa464a65-c171-47a5-b7c1-5d9ad77f7d16)
+### 1. Data Loading
+- Loads ECG signal from MIT-BIH database (record 100)
+- Normalizes signal
+- Uses synthetic signal if dataset fails
+
+### 2. Preprocessing
+- Median filter → removes impulsive noise
+- Detrending → removes baseline wander
+
+### 3. Transformation
+- Short-Time Fourier Transform (STFT)
+- Converts signal → time-frequency domain
+
+### 4. Denoising
+- Applies Non-Local Means (NLM) on magnitude spectrogram
+- Preserves structure while reducing noise
+
+### 5. Reconstruction
+- Combines denoised magnitude with original phase
+- Uses inverse STFT to reconstruct signal
+
+##  Performance Metrics
+- MSE – Mean Squared Error
+- RMSE – Root Mean Squared Error
+- SNR – Signal-to-Noise Ratio
+- PSNR – Peak Signal-to-Noise Ratio
+- PRD – Percent Root Difference
+- Correlation (R)
+- SSIM – Structural Similarity Index
+
+##  Outputs
+
+### Plots:
+1. Clean vs Noisy ECG
+2. Denoised ECG
+3. Spectrogram comparison (Noisy vs Denoised)
+
+### Console Output:
+- Execution time
+- All performance metrics
+
+##  How to Run
+
+Install dependencies:
+pip install numpy scipy matplotlib scikit-image wfdb
+
+Run the script:
+python ecg_denoising.py
 
 
-The output includes:
-
-* Generates a noisy ECG signal (for demonstration)
-* Applies the denoising pipeline
-* Displays a comparison plot of noisy vs denoised signals
-* Computes Mean Squared Error (MSE)
-* Visual comparison of noisy and denoised ECG signals
-* Quantitative evaluation using MSE
-
-# Applications
-
-* Biomedical signal processing
-* ECG monitoring systems
-* Noise reduction in physiological signals
-
-
-# Citation
-
+## Citation
 Bing P, Liu W, Zhai Z, Li J, Guo Z, Xiang Y, He B and Zhu L (2024) A novel approach for denoising electrocardiogram signals to detect cardiovascular diseases using an efficient hybrid scheme. Front. Cardiovasc. Med. 11:1277123. doi: 10.3389/fcvm.2024.1277123
 
 
-
-# License
-
-This project is for academic and educational purposes.
-EC208 Digital Signal Processing 
+Developed as part of EC208 Digital Signal Processing project,
 National Institute of Technology Surathkal
